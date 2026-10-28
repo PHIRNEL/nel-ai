@@ -29,3 +29,8 @@ IMPORTANT
 DOCUMENTATION OFFICIELLE
 https://www.api-football.com/documentation-v3
 https://www.api-football.com/
+
+DEPANNAGE ERREUR « A server error occurred »
+- Le fichier package.json définit type=module pour que Vercel exécute les fonctions api/*.js utilisant export default.
+- Après import, vérifie dans Vercel > Settings > Environment Variables que API_FOOTBALL_KEY est bien définie pour l’environnement déployé, puis redéploie.
+- Teste directement https://TON-DOMAINE.vercel.app/api/matches?date=2026-10-28. Une réponse JSON doit être renvoyée. Si la page affiche encore « A server error occurred », consulte Deployment > Functions/Logs et copie le message d’erreur sans partager la clé API.
