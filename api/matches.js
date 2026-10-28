@@ -1,8 +1,8 @@
-const apiKey = process.env.API_FOOTBALL_KEY;
+const apiKey = process.env.API_FOOTBALL_KEY?.trim();
 
 if (!apiKey) {
   return res.status(500).json({
-    error: "Variable API_FOOTBALL_KEY absente sur Vercel"
+    error: "API_FOOTBALL_KEY absente ou vide dans Vercel"
   });
 }
 
