@@ -1,36 +1,172 @@
-NEL_AI - Version avec données réelles via API-Football
+# NEL_AI
+## DOCUMENT DE RÉFÉRENCE ET FEUILLE DE ROUTE DU PROJET
 
-FICHIERS
-- index.html, style.css, script.js : interface HTML/CSS/JS
-- api/matches.js : récupère les vrais matchs et scores du jour
-- api/predict.js : calcule des probabilités simplifiées à partir des derniers matchs des équipes
-- vercel.json : routage de l'application
+Version : 1.0  
+Projet : NEL_AI  
+Domaine : Football Analytics, Intelligence artificielle et prédiction sportive.
 
-AVANT DE COMMENCER
-La clé API précédemment partagée dans une conversation doit être considérée comme exposée. Régénère-la dans le tableau de bord API-Football avant le déploiement. Ne mets jamais la clé dans index.html ou script.js.
+### 1. PRÉSENTATION DU PROJET
 
-CONFIGURATION
-1. Ouvre https://dashboard.api-football.com/ et copie ta clé API régénérée.
-2. Déploie ce dossier sur Vercel.
-3. Dans Vercel > Project > Settings > Environment Variables, ajoute :
-   Name: API_FOOTBALL_KEY
-   Value: ta nouvelle clé API-Football
-   Environment: Production (et Preview si nécessaire)
-4. Enregistre puis redéploie le projet.
-5. Ouvre le site et sélectionne une date. Si l'API ne fournit aucun match, le site l'indiquera et n'affichera pas de matchs fictifs.
+NEL_AI est une plateforme intelligente d'analyse et de prédiction des matchs de football.
 
-IMPORTANT
-- La clé est utilisée uniquement côté serveur dans /api.
-- Les routes /api nécessitent Vercel ou un environnement compatible avec les fonctions serverless. Ouvrir index.html directement ou utiliser Live Server ne suffit pas.
-- L'offre gratuite API-Football annonce 100 requêtes par jour. Consulte ton tableau de bord pour les limites en vigueur.
-- Les compétitions, saisons et données disponibles dépendent de la couverture de l'API et de ton compte.
-- Les probabilités sont calculées par un modèle statistique simplifié à partir des derniers résultats récupérés. Elles ne sont ni des prédictions garanties ni une promesse de gain.
+Elle exploite les données sportives, les statistiques historiques et les modèles mathématiques pour calculer les probabilités des résultats.
 
-DOCUMENTATION OFFICIELLE
-https://www.api-football.com/documentation-v3
-https://www.api-football.com/
+Sa mission est de fournir des analyses fiables, compréhensibles et transparentes afin d'aider les utilisateurs à mieux évaluer les rencontres.
 
-DEPANNAGE ERREUR « A server error occurred »
-- Le fichier package.json définit type=module pour que Vercel exécute les fonctions api/*.js utilisant export default.
-- Après import, vérifie dans Vercel > Settings > Environment Variables que API_FOOTBALL_KEY est bien définie pour l’environnement déployé, puis redéploie.
-- Teste directement https://TON-DOMAINE.vercel.app/api/matches?date=2026-10-28. Une réponse JSON doit être renvoyée. Si la page affiche encore « A server error occurred », consulte Deployment > Functions/Logs et copie le message d’erreur sans partager la clé API.
+### 2. TECHNOLOGIES ET MÉTHODES
+
+Le moteur de prédiction repose sur :
+
+- Python pour les calculs et traitements statistiques.
+- FastAPI pour le backend et les API.
+- React ou HTML/CSS/JavaScript pour l'interface.
+- API-Football pour récupérer les données des matchs.
+- Poisson pour estimer les probabilités de buts.
+- Dixon-Coles pour améliorer la distribution des scores faibles.
+- Elo pour évaluer la force relative des équipes.
+- Intelligence artificielle pour enrichir les analyses et les explications.
+
+### 3. FONCTIONNEMENT DU MOTEUR
+
+Étape 1 : Récupération des matchs et des données sportives.
+
+Étape 2 : Analyse des performances des équipes.
+
+Étape 3 : Évaluation des forces offensives et défensives.
+
+Étape 4 : Calcul des buts attendus (xG estimés par le modèle).
+
+Étape 5 : Application des modèles Poisson, Dixon-Coles et Elo.
+
+Étape 6 : Génération d'une matrice de probabilités des scores exacts.
+
+Étape 7 : Calcul des marchés de paris à partir des probabilités.
+
+Étape 8 : Évaluation de la qualité des données et du niveau de confiance.
+
+Étape 9 : Présentation des pronostics et des explications.
+
+### 4. FONCTIONNALITÉS PRINCIPALES
+
+A. Analyse des matchs
+- Matchs du jour.
+- Matchs à venir.
+- Championnats et compétitions.
+- Forme des équipes.
+- Analyse domicile/extérieur.
+- Historique des confrontations.
+
+B. Prédictions
+- Victoire domicile (1).
+- Match nul (X).
+- Victoire extérieur (2).
+- Double chance.
+- BTTS (les deux équipes marquent).
+- Over/Under 1.5, 2.5 et 3.5.
+- Scores exacts avec probabilités.
+- Nombre de buts attendus.
+- Niveau de confiance.
+
+C. Scores exacts
+Le système doit afficher les six scores les plus probables pour chaque rencontre, avec leurs pourcentages respectifs.
+
+D. Générateur de tickets
+- Sélection de plusieurs rencontres.
+- Choix des types de paris.
+- Calcul des cotes combinées.
+- Définition de la mise en FCFA.
+- Calcul du gain brut potentiel.
+- Calcul du bénéfice potentiel.
+- Estimation de la probabilité de réussite du ticket.
+- Détection des sélections fortement dépendantes.
+
+E. Historique et performances
+- Historique des pronostics.
+- Résultats réels.
+- Comparaison prédiction/réalité.
+- Taux de réussite.
+- Précision des scores exacts.
+- Évolution des performances du moteur.
+
+### 5. FEUILLE DE ROUTE DE DÉVELOPPEMENT
+
+PHASE 1 : INFRASTRUCTURE
+- Organiser le projet.
+- Configurer le backend.
+- Configurer le frontend.
+- Connecter la base de données.
+- Sécuriser les clés API.
+- Configurer le déploiement.
+
+PHASE 2 : COLLECTE DES DONNÉES
+- Connecter API-Football.
+- Récupérer les calendriers.
+- Récupérer les résultats.
+- Récupérer les classements.
+- Récupérer les statistiques.
+- Gérer les données manquantes.
+- Mettre en place un système de cache.
+
+PHASE 3 : MOTEUR DE PRÉDICTION
+- Développer le modèle Poisson.
+- Intégrer Dixon-Coles.
+- Intégrer Elo.
+- Calculer les buts attendus.
+- Générer les probabilités 1X2.
+- Générer les six scores exacts.
+- Calculer BTTS et Over/Under.
+- Calculer la double chance.
+
+PHASE 4 : INTELLIGENCE ARTIFICIELLE
+- Créer un assistant d'analyse footballistique.
+- Expliquer les pronostics.
+- Détecter les incohérences.
+- Comparer les performances des équipes.
+- Identifier les facteurs de risque.
+- Générer des rapports d'analyse.
+
+PHASE 5 : INTERFACE UTILISATEUR
+- Tableau de bord.
+- Liste des matchs.
+- Fiches détaillées des rencontres.
+- Tableau des pronostics.
+- Scores exacts.
+- Générateur de tickets.
+- Historique des analyses.
+- Interface mobile responsive.
+
+PHASE 6 : FIABILITÉ ET VALIDATION
+- Tester les prédictions sur les résultats historiques.
+- Effectuer des tests rétrospectifs (backtesting).
+- Mesurer le Brier Score et le Log Loss.
+- Vérifier la calibration des probabilités.
+- Comparer les prédictions aux résultats réels.
+- Identifier les championnats où le moteur fonctionne le mieux.
+- Améliorer progressivement les algorithmes.
+
+PHASE 7 : DÉPLOIEMENT
+- Hébergement de la plateforme.
+- Configuration du domaine.
+- Sécurisation des API.
+- Optimisation des performances.
+- Surveillance des erreurs.
+- Maintenance et mises à jour.
+
+### 6. PRINCIPES FONDAMENTAUX
+
+NEL_AI doit respecter les principes suivants :
+
+1. Ne jamais inventer des matchs ou des statistiques.
+2. Ne jamais afficher une prédiction sans données suffisantes.
+3. Ne jamais présenter un score comme certain.
+4. Afficher les probabilités plutôt que des certitudes.
+5. Privilégier les données récentes.
+6. Mesurer les performances réelles du moteur.
+7. Signaler les informations indisponibles.
+8. Éviter les tickets construits uniquement pour obtenir une cote élevée.
+
+### 7. OBJECTIF FINAL
+
+Faire de NEL_AI une plateforme indépendante d'analyse et de prédiction footballistique, capable d'exploiter des données réelles, de produire des probabilités cohérentes, de proposer des scores exacts argumentés et de mesurer objectivement ses propres performances.
+
+VISION : Transformer les données footballistiques en analyses statistiques exploitables.
