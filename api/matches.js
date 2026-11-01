@@ -43,17 +43,27 @@ export default async function handler(req, res) {
     }
 
     // 5. Structure et renvoi des données au front-end
+    const statusLabel = short => {
+      if (['1H','2H','HT','ET','P','LIVE','BT'].includes(short)) return 'En direct';
+      if (['FT','AET','PEN'].includes(short)) return 'Terminé';
+      if (['NS','TBD'].includes(short)) return 'À venir';
+      return short || 'À venir';
+    };
     const matches = (data.response || []).map(item => ({
       id: String(item.fixture.id),
       competition: item.league.name,
+      competitionLogo: item.league.logo || '',
+      competitionCode: String(item.league.id || ''),
       country: item.league.country,
-      time: new Date(item.fixture.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
+      time: new Date(item.fixture.date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Africa/Brazzaville' }),
       status: item.fixture.status.short,
-      statusLabel: item.fixture.status.long,
+      statusLabel: statusLabel(item.fixture.status.short),
       homeTeam: item.teams.home.name,
       awayTeam: item.teams.away.name,
       homeTeamId: item.teams.home.id,
       awayTeamId: item.teams.away.id,
+      homeLogo: item.teams.home.logo || '',
+      awayLogo: item.teams.away.logo || '',
       scoreHome: item.goals.home,
       scoreAway: item.goals.away
     }));
